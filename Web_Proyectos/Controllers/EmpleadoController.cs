@@ -149,7 +149,7 @@ namespace Web_Proyectos.Controllers
             }
             catch (Exception ex)
             {
-
+                //nuevo total
                 throw;
             }
             
