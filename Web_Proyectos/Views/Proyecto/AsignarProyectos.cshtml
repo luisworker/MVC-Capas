@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Entidad.VMProyectoEmpleado>
+@{
+	ViewBag.Title = "Asignar Proyectos";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="control-label col-md-2">Empleados</label>
+		<div class="col-md-4">
+			<select class="form-control" id="EmpleadoId" name="EmpleadoId">
+				<option value="">Seleccione...</option>
+			</select>
+
+		</div>
+
+		<label class="control-label col-md-1">Proyectos</label>
+		<div class="col-md-4">
+			<select class="form-control" id="ProyectoId" name="ProyectoId">
+				<option value="">Seleccione...</option>
+			</select>
+		</div>
+		<hr />
+		<hr />
+		<div class="form-group">
+			<div class="col-md-4">
+				<button class="form-control btn btn-primary btn-block" onclick="Asignar()"><i class="glyphicon glyphicon-hand-up">Asignar</i></button>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+<table class="table" id="lAsignaciones">
+	<thead>
+		<tr>
+			<th>
+				<label class="control-label col-md-8">Empleado</label>
+			</th>
+			<th>
+				<label class="control-label col-md-8">Proyecto</label>
+			</th>
+			<th>
+				<label class="control-label col-md-8">Fecha de Alta</label>
+			</th>
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@item.NombreEmpleado
+				</td>
+				<td>
+					@item.NombreProyecto
+				</td>
+				<td>
+					@Convert.ToDateTime(@item.FechaAlta).ToString("dd-MM-yyyy");
+				</td>
+				<td>
+					<button class="btn btn-primary btn-xs" onclick="EliminarAsignacion(@item.EmpleadoId, @item.ProyectoId)"><i class="glyphicon glyphicon-trash "></i></button>
+				</td>
+
+
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+
+@section scripts{
+	<script>
+		$("#lAsignaciones").dataTable();
+		getDataCombobox("/Empleado/ObtenerEmpleados", function (result) {
+			$.each(result, function (key, item) {
+
+				$("#EmpleadoId").append("<option value=" + item.EmpleadoId + ">" + item.NombreApellidos + "</option>");
+			})
+		})
+		getDataCombobox("/Proyecto/ObtenerProyectos", function (result) {
+			$.each(result, function (key, item) {
+				$("#ProyectoId").append("<option value=" + item.ProyectoId + ">" + item.NombreProyecto + "</option>");
+			})
+		})
+		function Asignar() {
+			var idProyecto = $("#ProyectoId ").find("option:selected").val();
+
+			var idEmpleado = $("#EmpleadoId").find("option:selected").val();
+			if (idEmpleado == "" || idProyecto == "") {
+				alert("No hay seleccionado Empleado o Proyecto");
+				return;
+			}
+			$.ajax({
+				url: '/proyecto/AsignarProyectos',
+				type: 'post',
+				data: { "EmpleadoId": idEmpleado, "ProyectoId": idProyecto }
+			}).done(function (response) {
+				if (response.ok) {
+					alert("Proceso funcionó correctamente");
+					window.location = response.toRedirect;
+				}
+				else {
+					alert(response.Message);
+				}
+
+			}).fail(function (jqXHR, textStatus, errorThrown) { })
+			LoadingOverlayHide("#frmProyecto");
+
+		}
+		function EliminarAsignacion(EmpleadoId, ProyectoId)
+		{
+			$.confirm({
+				title: 'Confirmacion!',
+				content: 'Desea Eliminar este elemento',
+				buttons:
+				{
+					confirmar: function () {
+						$.ajax({
+							url: '/proyecto/EliminarAsignacion',
+							type: 'post',
+							data: { "EmpleadoId": EmpleadoId, "ProyectoId": ProyectoId }
+						}).done(function (response) {
+							if (response.ok) {
+								alert("Proceso funcionó correctamente");
+								window.location = response.toRedirect;
+							}
+							else {
+								alert(response.Message);
+							}
+
+						}).fail(function (jqXHR, textStatus, errorThrown) { })
+						LoadingOverlayHide("#frmProyecto");
+					},
+					cancelar: function ()
+					{
+						return;
+					}
+				}
+			})
+
+		}
+	
+	</script>
+}

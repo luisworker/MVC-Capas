@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Reporte Empleado";
+}
+
+<h2>Reporte Empleado</h2>
+<br />
+<button class="btn btn-primary" onclick="Mostrar()">
+    <i class="glyphicon glyphicon-eye-open"> Mostrar</i>
+</button>
+<button class="btn btn-primary" onclick="Descargar()">
+	<i class="glyphicon glyphicon-arrow-down"> Descargar</i>
+</button>
+<iframe id="iframeEmpleado" width="100%" height="550px" scrolling="no" frameborder="0"></iframe>
+@section scripts{
+    <script>
+        function Mostrar() {
+            
+			window.open("/Empleado/DescargarReporteEmpleado");
+
+        }
+        function Descargar() {
+
+            $("#iframeEmpleado")
+                .attr("src", "/Empleado/DescargarReporteEmpleado")
+                .load();
+        }
+    </script>
+    }

@@ -1,0 +1,135 @@
+﻿@model Entidad.Empleado
+
+@{
+	ViewBag.Title = "Crear";
+}
+
+<h2>Crear</h2>
+
+
+<form class="form-group" action="@Url.Action("Crear","Empleado")" method="post" id="frmEmpleados">
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>Empleados</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			<label class="control-label col-md-2">Nombres de Empleado</label>
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombres del empleado" } })
+				@Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Apellidos de Empleado</label>
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Apellidos del empleado" } })
+				@Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Email de Empleado</label>
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email del empleado" } })
+				@Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-2">Direccion</label>
+			<div class="col-md-7">
+				<input class="form-control" name="Direccion" id="Direccion" type="tel" placeholder="Direccion" />
+				@Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Celular</label>
+			<div class="col-md-7">
+				<input class="form-control" name="Celular" id="Celular" type="tel" placeholder="Telefono Movil" />
+				@Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Departamento</label>
+			<div class="col-md-7">
+				<select name="DepartamentoId" id="DepartamentoId" class="form-control">
+					<option value="">Seleccione departamento...</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Crear Empleados" class="btn btn-primary" />
+			</div>
+		</div>
+	</div>
+</form>
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+@section scripts
+    {
+	@*<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>*@
+
+
+	<script>
+		getDataCombobox("/Departamento/getDepartamento", function (result) {
+			$.each(result, function (key, item) {
+				$("#DepartamentoId").append("<option value=" + item.DepartamentoId + ">" + item.NombreDepartamento + "</option>");
+			})
+		});
+		
+		
+		
+		$("#frmEmpleados").submit(function (Event) {
+			Event.preventDefault();
+			var nombreProy = $("#Nombres").val();
+			
+
+			if ($.trim(nombreProy) == "") {
+				alert("Nombre de Empleado no válido");
+				return;
+			}
+			
+			
+
+
+			var post_url = $(this).attr("action");
+			var post_method = $(this).attr("method");
+			var post_parametros = $(this).serializeArray();
+
+			console.log(post_parametros);
+			LoadingOverlayShow("#frmEmpleados");
+			$.ajax({
+				url: post_url,
+				type: post_method,
+				data: post_parametros
+			}).done(function (response) {
+
+				LoadingOverlayHide("#frmEmpleados");
+
+				if (response.ok) {
+					alert("Proceso funcionó correctamente");
+
+					window.location = response.toRedirect;
+				}
+				else {
+					alert(response.msg);
+				}
+
+			}).fail(function (jqXHR, textStatus, errorThrown) { })
+			LoadingOverlayHide("#frmEmpleados");
+			//objeto jqXHR: Es un objeto jqXHR que contiene todos los datos de la solicitud Ajax realizada
+			//incluyendo la propiedad jqXHR.status que contiene entre otros posibler el codigo HTTP de la respuesta
+			//objeto textStatus: texto que describe el tipo de error, que puede ser, ademas de null
+			//"abort","timeout", "No transport" o "parseerror"
+			//objeto errorThrow: si hay un error HTTP, errorThrown contiene el texto de la cabecera HTTP de estado.
+			//por ejemplo: Para un error HTTP 404 errorThrown es "Not Found"; para un error HTTP 500 es "Internal Server Error"
+		})
+
+
+	</script>
+} 

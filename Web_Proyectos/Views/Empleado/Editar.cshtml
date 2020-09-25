@@ -1,0 +1,146 @@
+﻿@model Entidad.VMEmpleado
+
+@{
+	ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+<form class="form-group" action="@Url.Action("Editar","Empleado")" id="frmEmpleado" method="post">
+	@Html.AntiForgeryToken();
+
+	<div class="form-horizontal">
+		<h4>Empleado</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmpleadoId)
+		
+
+		<div class="form-group">
+			<label class="control-label col-md-2">Nombre del Empleado</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Apellidos del Empleado</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Celular</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Correo</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Direccion</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Departamento</label>
+			<div class="col-md-7">
+				<select name="DepartamentoId" id="DepartamentoId1" class="form-control">
+					
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-primary" />
+
+			</div>
+		</div>
+
+		<a href="@Url.Action("Index","Empleado")" value="Volver" class="btn btn-primary">Volver</a>
+
+	</div>
+</form>
+@section scripts{
+	<script>
+		
+		getDataCombobox("/Departamento/getDepartamento", function (result) {
+			var a=@Model.DepartamentoId;
+			$.each(result, function (key, item) {
+				$("#DepartamentoId1").append("<option value=" + item.DepartamentoId + ">" + item.NombreDepartamento + "</option>");
+				
+			})
+			$("#DepartamentoId1").value(a);
+		});
+		
+
+			$("#frmEmpleado").submit(function (Event) {
+				Event.preventDefault();
+				var nombreProy = $("#Nombres").val();
+				
+
+				if ($.trim(nombreProy) == "") {
+					alert("Nombre de Empleado no válido");
+					return;
+				}
+				
+
+
+				var post_url = $(this).attr("action");
+				var post_method = $(this).attr("method");
+				var post_parametros = $(this).serializeArray();
+
+				console.log(post_parametros);
+				LoadingOverlayShow("#frmEmpleado");
+				$.ajax({
+					url: post_url,
+					type: post_method,
+					data: post_parametros
+				}).done(function (data) {
+					LoadingOverlayHide("#frmEmpleado");
+					if (data.ok)
+					{
+						alert("Proceso funcionó correctamente");						
+						window.location = data.toRedirect;
+					}
+					else {
+						alert(data.msg);
+					}
+				}).fail(function (jqXHR, textStatus, errorThrown) { })
+				LoadingOverlayHide("#frmEmpleado");
+		
+
+			//$("#Eliminar").href(function (event) {
+			//	if (!confirm("¿Estas Seguro de Eliminar este Empleado?"))
+			//	{
+			//		event.preventDefault();
+			//	}
+			//	}
+
+
+		})
+
+	</script>
+
+}
+
+

@@ -1,0 +1,15 @@
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Negocio.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Negocio.pdb
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Datos.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Entidad.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\EntityFramework.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Datos.pdb
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Datos.dll.config
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\Entidad.pdb
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\EntityFramework.xml
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\bin\Debug\es\EntityFramework.resources.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\obj\Debug\Negocio.csprojAssemblyReference.cache
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\obj\Debug\Negocio.csproj.CoreCompileInputs.cache
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\obj\Debug\Negocio.csproj.CopyComplete
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\obj\Debug\Negocio.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Negocio\obj\Debug\Negocio.pdb

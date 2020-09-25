@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "Zebra_datepicker@1.9.15",
+      "destination": "Scripts/Zebra_datepicker/"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Entidad.Departamento>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Crear")
+</p>
+<table class="table" id="Dtable">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.NombreDepartamento)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.NombreDepartamento)
+				</td>
+				<td>
+					@Html.ActionLink("Edit", "Editar", new { id = item.DepartamentoId }) |
+					@Html.ActionLink("Details", "Detalles", new { id = item.DepartamentoId }) |
+					<a class="btn-link" href="#" id="Eliminar" onclick="EliminarDpto(@item.DepartamentoId)">Eliminar</a>
+				</td>
+			</tr>
+		}
+    </tbody>
+
+</table>
+@section scripts{
+    <script>
+        //$("#Eliminar").onclick(function () {
+        //alert("Este si");
+        //})
+        $("#Dtable").dataTable();
+        function EliminarDpto(id) {
+        alert("Work");
+        $.confirm({
+            title: 'Confirmar',
+            content: 'Estas segura do borrar el Dpto ' + id,
+            buttons: {
+                confirm: function () {
+                    $.alert('Confirmed!');
+                    window.location = "/Departamento/Eliminar?id=" + id;
+                },
+                cancel: function () {
+                    //$.alert('Canceled!');
+                },
+                //somethingElse: {
+                //	text: 'Something else',
+                //	btnClass: 'btn-blue',
+                //	keys: ['enter', 'shift'],
+                //	action: function () {
+                //		$.alert('Something else?');
+                //	}
+            }
+        })
+            }
+
+        
+</script>
+}

@@ -1,0 +1,6 @@
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\bin\Debug\Entidad.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\bin\Debug\Entidad.pdb
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\obj\Debug\Entidad.csprojAssemblyReference.cache
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\obj\Debug\Entidad.csproj.CoreCompileInputs.cache
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\obj\Debug\Entidad.dll
+C:\Users\leste\source\repos\Demo ASPNET MVC  en Capas\Entidad\obj\Debug\Entidad.pdb

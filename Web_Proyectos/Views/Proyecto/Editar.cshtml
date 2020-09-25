@@ -1,0 +1,123 @@
+﻿@model Entidad.Proyecto
+
+@{
+	ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+<form class="form-group" action="@Url.Action("Editar","Proyecto")" id="frmProyecto" method="post">
+	@Html.AntiForgeryToken();
+
+	<div class="form-horizontal">
+		<h4>Proyecto</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.ProyectoId)
+
+		<div class="form-group">
+			<label class="control-label col-md-2">Nombre del Proyecto</label>
+
+			<div class="col-md-10">
+
+				@Html.EditorFor(model => model.NombreProyecto, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.NombreProyecto, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-2">Fecha de Inicio</label>
+
+			<div class="col-md-10">
+				<input class="form-control" id="FechaInicio" name="FechaInicio" type="date" value="@Model.FechaInicio.ToString("yyyy-MM-dd")" />
+
+				@Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label col-md-2">Fecha Fin</label>
+
+			<div class="col-md-10">
+				<input class="form-control" id="FechaFin" name="FechaFin" type="date" value="@Model.FechaFin.ToString("yyyy-MM-dd")" />
+
+				@Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-primary" />
+				
+			</div>
+		</div>
+
+		<a href="@Url.Action("Index","Proyecto")" value="Volver" class="btn btn-primary">Volver</a>
+
+	</div>
+</form>
+@section scripts{
+	<script>
+		
+
+		
+
+			$("#frmProyecto").submit(function (Event) {
+				Event.preventDefault();
+				var nombreProy = $("#NombreProyecto").val();
+				var FechaIni = $("#FechaInicio").val();
+				var FechaFin = $("#FechaFin").val();
+
+				if ($.trim(nombreProy) == "") {
+					alert("Nombre de proyecto no válido");
+					return;
+				}
+				if (FechaIni == "" || FechaFin == "") {
+					alert("Especifique Fecha de inicio y Fecha Fin");
+					return;
+				}
+				if (!ValidarFecha(FechaIni, FechaFin)) {
+					alert("La Fecha Fin no puede ser menor que la Fecha Inicial");
+					return;
+				}
+
+
+				var post_url = $(this).attr("action");
+				var post_method = $(this).attr("method");
+				var post_parametros = $(this).serializeArray();
+
+				console.log(post_parametros);
+				LoadingOverlayShow("#frmProyecto");
+				$.ajax({
+					url: post_url,
+					type: post_method,
+					data: post_parametros
+				}).done(function (data) {
+					LoadingOverlayHide("#frmProyecto");
+					if (data.ok)
+					{
+						alert("Proceso funcionó correctamente");						
+						window.location = data.toRedirect;
+					}
+					else {
+						alert(response.msg);
+					}
+				}).fail(function (jqXHR, textStatus, errorThrown) { })
+				LoadingOverlayHide("#frmProyecto");
+		
+
+			//$("#Eliminar").href(function (event) {
+			//	if (!confirm("¿Estas Seguro de Eliminar este Proyecto?"))
+			//	{
+			//		event.preventDefault();
+			//	}
+			//	}
+
+
+		})
+
+	</script>
+
+}
+
+

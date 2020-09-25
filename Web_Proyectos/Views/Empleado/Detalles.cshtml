@@ -1,0 +1,55 @@
+﻿@model Entidad.VMEmpleado
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles del Empleado</h2>
+
+<div>
+    <h4>@Model.NombreApellidos</h4>
+    <hr />
+	<dl class="dl-horizontal">
+		<dt>
+			Nombre 
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Nombres)
+		</dd>
+		<dt>
+			Apellidos
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Apellidos)
+		</dd>
+		<dt>
+			Email 
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+		<dt>
+			Teléfono 
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Celular)
+		</dd>
+		<dt>
+			Dirección 
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Direccion)
+		</dd>
+		<dt>
+			Departamento
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.NombreDepartamento)
+		</dd>
+	</dl>
+</div>
+<p>
+	<a class="btn btn-primary" href="@Url.Action("Editar","Empleado",new {id=Model.EmpleadoId})" id="btnEditar"> Editar</a>
+	<a class="btn btn-primary" href="@Url.Action("Index","Empleado",new {id=Model.EmpleadoId})" id="btnBack">Volver</a>
+
+</p>
